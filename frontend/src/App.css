@@ -1,0 +1,26 @@
+/* Add some breathing room */
+.App {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Style each recipe as a card */
+.recipe-card {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.recipe-card h2 {
+  color: #E67E22;
+  margin-top: 0;
+}
+
+.recipe-info {
+  color: #666;
+  font-size: 14px;
+}

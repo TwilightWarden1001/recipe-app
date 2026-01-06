@@ -19,10 +19,13 @@ function App() {
     <div className="App">
       <h1>My Recipes</h1>
       <ul>
-        {recipes.map(recipe => (
-          <li key={recipe.recipe_id}>
-            {recipe.recipe_name} - {recipe.servings} servings
-          </li>
+       {recipes.map(recipe => (
+          <div key={recipe.recipe_id} className="recipe-card">
+            <h2>{recipe.recipe_name}</h2>
+            <div className="recipe-info">
+              Servings: {recipe.servings} | Cook time: {recipe.cook_time} {recipe.cook_time_unit}
+            </div>
+          </div>
         ))}
       </ul>
     </div>
