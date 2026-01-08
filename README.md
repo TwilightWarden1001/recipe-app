@@ -56,4 +56,4 @@ npm start
 
 ## Author
 
-Benjamin - Full-stack developer in training
+Benjamin Kasper - Full-stack developer in training
