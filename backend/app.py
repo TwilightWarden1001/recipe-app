@@ -1,9 +1,11 @@
 import sqlite3
+from datetime import datetime, timezone
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
 DATABASE_LOCATION = 'recipes.db'
 SELECT_STATEMENT = 'SELECT * FROM '
+INSERT_RECIPE = 'INSERT INTO recipes (recipe_name, prep_time, prep_time_unit, cook_time, cook_time_unit, servings, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)'
 
 app = Flask(__name__)
 CORS(app)  # Allows React to talk to Flask
@@ -22,23 +24,28 @@ def select_all(connection, table_name):
 
     return jsonify(data)
 
-def add_recipe(connection, table_name):
-    # I don't get why this is name and not table name, makes no sense
+def add_recipe(connection):
     recipe_name = request.json['name']
+    prep_time = request.json['prep_time']
+    prep_time_unit = request.json['prep_time_unit']
+    cook_time = request.json['cook_time']
+    cook_time_unit = request.json['cook_time_unit']
+    servings = request.json['servings']
+    created_at = datetime.now(timezone.utc)
 
-    if len(recipe_name) == 0:
-        return jsonify({'error': 'Recipe name cannot be empty'})
     # This is the part that makes sense. I forgot to commit these two lines make full sense
-    connection.execute("INSERT INTO " + table_name + " (recipe_name) VALUES (?)", (recipe_name,))
+    connection.execute(INSERT_RECIPE, (recipe_name, prep_time, prep_time_unit, cook_time, cook_time_unit, servings, created_at))
     connection.commit()
+    connection.close()
 
     # I have no clue what this is doing
-    return jsonify({'message': 'Recipe added successfully'})
+    return jsonify({'message': 'Recipe Added Successfully'})
 
 def add_ingredient(connection, table_name):
     ingredient_name = request.json['name']
     connection.execute("INSERT INTO " + table_name + " (ingredient_name) VALUES (?)", (ingredient_name,))
     connection.commit()
+    connection.close()
     return jsonify({'message': 'Ingredient added successfully'})
 
 def update_recipe(connection, table_name, recipe_id):
@@ -47,6 +54,7 @@ def update_recipe(connection, table_name, recipe_id):
 def delete_recipe(connection, table_name, recipe_id):
     connection.execute("DELETE FROM " + table_name + " WHERE recipe_id = ?", (recipe_id,))
     connection.commit()
+    connection.close()
     return jsonify({'message': 'Recipe deleted successfully'})
 
 # Handles selecting and adding recipes
@@ -57,7 +65,7 @@ def add_and_get_recipes():
     if request.method == 'GET':
         return select_all(connection, table_name)
     if request.method == 'POST':
-        return add_recipe(connection, table_name)
+        return add_recipe(connection)
     print("Invalid request method")
 
 # Handles updating and deleting recipes
