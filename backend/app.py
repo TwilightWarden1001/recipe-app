@@ -2,29 +2,20 @@ import sqlite3
 from datetime import datetime, timezone
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-
-DATABASE_LOCATION = 'recipes.db'
-SELECT_STATEMENT = 'SELECT * FROM '
-INSERT_RECIPE = 'INSERT INTO recipes (recipe_name, prep_time, prep_time_unit, cook_time, cook_time_unit, servings, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)'
+from queries import DATABASE_LOCATION, SELECT_ALL_RECIPES, CREATE_RECIPE, DELETE_RECIPE, UPDATE_RECIPE
 
 app = Flask(__name__)
 CORS(app)  # Allows React to talk to Flask
+
 
 def get_db_connection():
     connection = sqlite3.connect(DATABASE_LOCATION)
     connection.row_factory = sqlite3.Row  # Returns rows as sqlite3.Row objects
     return connection
 
-def select_all(connection, table_name):
-    rows = connection.execute(SELECT_STATEMENT + table_name)
-    data = []
 
-    for row in rows:
-        data.append(dict(row))
-
-    return jsonify(data)
-
-def add_recipe(connection):
+def create_recipe(connection):
+    # All recipe parts
     recipe_name = request.json['name']
     prep_time = request.json['prep_time']
     prep_time_unit = request.json['prep_time_unit']
@@ -33,62 +24,73 @@ def add_recipe(connection):
     servings = request.json['servings']
     created_at = datetime.now(timezone.utc)
 
-    # This is the part that makes sense. I forgot to commit these two lines make full sense
-    connection.execute(INSERT_RECIPE, (recipe_name, prep_time, prep_time_unit, cook_time, cook_time_unit, servings, created_at))
+    connection.execute(CREATE_RECIPE, (recipe_name, prep_time,
+                       prep_time_unit, cook_time, cook_time_unit, servings, created_at))
     connection.commit()
     connection.close()
 
-    # I have no clue what this is doing
     return jsonify({'message': 'Recipe Added Successfully'})
 
-def add_ingredient(connection, table_name):
-    ingredient_name = request.json['name']
-    connection.execute("INSERT INTO " + table_name + " (ingredient_name) VALUES (?)", (ingredient_name,))
+
+def read_all_recipes(connection):
+    rows = connection.execute(SELECT_ALL_RECIPES)
+    data = []
+
+    for row in rows:
+        data.append(dict(row))
+
+    return jsonify(data)
+
+
+def update_recipe(connection, recipe_id):
+    recipe_name = request.json['name']
+    prep_time = request.json['prep_time']
+    prep_time_unit = request.json['prep_time_unit']
+    cook_time = request.json['cook_time']
+    cook_time_unit = request.json['cook_time_unit']
+    servings = request.json['servings']
+
+    connection.execute(UPDATE_RECIPE, (recipe_name, prep_time,
+                       prep_time_unit, cook_time, cook_time_unit, servings, recipe_id))
     connection.commit()
     connection.close()
-    return jsonify({'message': 'Ingredient added successfully'})
+    return jsonify({'message': 'Recipe Updated Successfully'})
 
-def update_recipe(connection, table_name, recipe_id):
-    print("Updating recipe in " + table_name)
 
-def delete_recipe(connection, table_name, recipe_id):
-    connection.execute("DELETE FROM " + table_name + " WHERE recipe_id = ?", (recipe_id,))
+def delete_recipe(connection, recipe_id):
+    connection.execute(DELETE_RECIPE, (recipe_id,))
     connection.commit()
     connection.close()
-    return jsonify({'message': 'Recipe deleted successfully'})
+    return jsonify({'message': 'Recipe Deleted Successfully'})
 
-# Handles selecting and adding recipes
+
 @app.route('/api/recipes', methods=['GET', 'POST'])
-def add_and_get_recipes():
-    table_name = 'recipes'
-    connection = get_db_connection()
-    if request.method == 'GET':
-        return select_all(connection, table_name)
-    if request.method == 'POST':
-        return add_recipe(connection)
-    print("Invalid request method")
-
-# Handles updating and deleting recipes
-@app.route('/api/recipes/<int:recipe_id>', methods=['PUT', 'DELETE'])
-def update_and_delete_recipes(recipe_id):
-    table_name = 'recipes'
-    connection = get_db_connection()
-    if request.method == 'PUT':
-        return update_recipe(connection, table_name, recipe_id)
-    if request.method == 'DELETE':
-        return delete_recipe(connection, table_name, recipe_id)
-    print("Invalid request method")
-
 # Handles selecting and adding recipes
-@app.route('/api/ingredients', methods=['GET', 'POST'])
-def add_and_get_ingredients():
-    table_name = 'ingredients'
+def add_and_get_recipes():
     connection = get_db_connection()
-    if request.method == 'GET':
-        return select_all(connection, table_name)
+    # Create in CRUD
     if request.method == 'POST':
-        return add_ingredient(connection, table_name)
+        return create_recipe(connection)
+
+    # Read/Write in CRUD
+    if request.method == 'GET':
+        return read_all_recipes(connection)
     print("Invalid request method")
+
+
+@app.route('/api/recipes/<int:recipe_id>', methods=['PUT', 'DELETE'])
+# Handles updating and deleting recipes
+def update_and_delete_recipes(recipe_id):
+    connection = get_db_connection()
+    # Update in CRUD
+    if request.method == 'PUT':
+        return update_recipe(connection, recipe_id)
+
+    # Delete in CRUD
+    if request.method == 'DELETE':
+        return delete_recipe(connection, recipe_id)
+    print("Invalid request method")
+
 
 if __name__ == '__main__':
     app.run(debug=True)
