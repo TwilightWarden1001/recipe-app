@@ -20,7 +20,7 @@ function RecipeCard({ recipe }) {
       <div className="recipe-info">
         Key {recipe.recipe_id} | Servings: {recipe.servings} | Cook time:{" "}
         {recipe.cook_time} {recipe.cook_time_unit} | Prep time:{" "}
-        {recipe.prep_time} {recipe.prep_time_unit}
+        {recipe.prep_time} {recipe.prep_time_unit} | {recipe.created_at}
         <button onClick={() => DeleteRecipe(recipe)}>Delete Recipe</button>
         <button>Edit Recipe</button>
       </div>

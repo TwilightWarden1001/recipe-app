@@ -22,10 +22,7 @@ function useGetData(apiEndpoint) {
 
 function App() {
   let recipes_table = "http://localhost:5000/api/recipes";
-  let ingredients_table = "http://localhost:5000/api/ingredients";
-
   let recipes = useGetData(recipes_table);
-  let ingredients = useGetData(ingredients_table);
 
   return (
     <div className="App">
@@ -36,12 +33,6 @@ function App() {
           <li key={recipe.recipe_id}>
             <RecipeCard recipe={recipe} />
           </li>
-        ))}
-      </ul>
-      <h1>My Ingredients</h1>
-      <ul>
-        {ingredients.map((ingredient) => (
-          <li key={ingredient.ingredient_id}>{ingredient.ingredient_name}</li>
         ))}
       </ul>
       <div>
