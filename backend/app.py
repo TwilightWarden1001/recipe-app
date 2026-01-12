@@ -16,12 +16,18 @@ def get_db_connection():
 
 def create_recipe(connection):
     # All recipe parts
-    recipe_name = request.json['name']
+    recipe_name = request.json['recipeName']
+    print(recipe_name)
     prep_time = request.json['prep_time']
+    print(prep_time)
     prep_time_unit = request.json['prep_time_unit']
+    print(prep_time_unit)
     cook_time = request.json['cook_time']
+    print(cook_time)
     cook_time_unit = request.json['cook_time_unit']
+    print(cook_time_unit)
     servings = request.json['servings']
+    print(servings)
     created_at = datetime.now(timezone.utc)
 
     connection.execute(CREATE_RECIPE, (recipe_name, prep_time,
@@ -43,7 +49,7 @@ def read_all_recipes(connection):
 
 
 def update_recipe(connection, recipe_id):
-    recipe_name = request.json['name']
+    recipe_name = request.json['recipeName']
     prep_time = request.json['prep_time']
     prep_time_unit = request.json['prep_time_unit']
     cook_time = request.json['cook_time']
