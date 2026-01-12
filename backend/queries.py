@@ -1,6 +1,6 @@
 # This file is only to hold SQL statements
 # Where the database is stored. It's in backend but the app.py is also there
-DATABASE_LOCATION = 'recipes.db'
+DATABASE_LOCATION = r'C:\Coding\recipe-app\backend\recipes.db'
 
 # Select all recipes
 SELECT_ALL_RECIPES = 'SELECT * FROM recipes'

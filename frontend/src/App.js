@@ -59,11 +59,7 @@ function App() {
 
   return (
     <div className="App">
-      <button>Add Ingredient</button>
-      <button>Delete Recipe</button>
-      <button>Delete Ingredient</button>
-      <button>Update Recipe</button>
-      <button>Update Ingredient</button>
+      <button>Add Recipe</button>
       <h1>My Recipes</h1>
       <ul>
         {recipes.map((recipe) => (
