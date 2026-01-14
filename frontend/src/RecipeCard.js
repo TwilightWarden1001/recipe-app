@@ -18,14 +18,21 @@ function RecipeCard({ recipe }) {
     <div className="recipe-card">
       <h2>{recipe.recipe_name}</h2>
       <div className="recipe-info">
-        Key {recipe.recipe_id} | Servings: {recipe.servings} | Cook time:{" "}
-        {recipe.cook_time} {recipe.cook_time_unit} | Prep time:{" "}
-        {recipe.prep_time} {recipe.prep_time_unit} | {recipe.created_at}
-        <button onClick={() => DeleteRecipe(recipe)}>Delete Recipe</button>
-        <button>Edit Recipe</button>
+        Servings: {recipe.servings} | Cook time: {recipe.cook_time}{" "}
+        {recipe.cook_time_unit} | Prep time: {recipe.prep_time}{" "}
+        {recipe.prep_time_unit} | Added:{" "}
+        {new Date(recipe.created_at).toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+        })}
+        <br />
+        <button className="button delete" onClick={() => DeleteRecipe(recipe)}>
+          Delete Recipe
+        </button>
+        <button className="button edit">Edit Recipe</button>
       </div>
     </div>
   );
 }
-
 export default RecipeCard;

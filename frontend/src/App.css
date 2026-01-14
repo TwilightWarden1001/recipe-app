@@ -5,6 +5,23 @@
   padding: 20px;
 }
 
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+nav {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
 /* Style each recipe as a card */
 .recipe-card {
   background: white;
@@ -43,23 +60,53 @@ input:focus {
     border-color: #4caf50;
 }
 
-/* Clean button styling */
+/* Base button styling */
 button {
-    padding: 12px 24px;
-    border-radius: 5px;
+    padding: 10px 20px;
+    border-radius: 6px;
     border: none;
     color: white;
     cursor: pointer;
-    background-color: #4caf50;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
-    transition: background-color 0.3s;
+    transition: all 0.2s ease;
+    margin-right: 10px;
 }
 
 button:hover {
-    background-color: #45a049;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 
 button:active {
-    transform: translateY(1px);
+    transform: translateY(0);
+}
+
+/* Add/Create actions - Blue (positive action) */
+.button.add,
+button[type="submit"] {
+    background-color: #2196F3;
+}
+
+.button.add:hover,
+button[type="submit"]:hover {
+    background-color: #1976D2;
+}
+
+/* Edit actions - Gray (neutral) */
+.button.edit {
+    background-color: #757575;
+}
+
+.button.edit:hover {
+    background-color: #616161;
+}
+
+/* Delete/Remove actions - Red (dangerous action) */
+.button.remove, .button.delete {
+    background-color: #f44336;
+}
+
+.button.remove:hover, .button.delete:hover {
+    background-color: #d32f2f;
 }

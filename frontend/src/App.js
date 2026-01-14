@@ -1,44 +1,30 @@
-import { useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import "./App.css";
 import RecipeForm from "./RecipeForm";
-import RecipeCard from "./RecipeCard";
-
-// This a reusable function to read data from any table in my database. NOT Update/Delete/Create.
-function useGetData(apiEndpoint) {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    fetch(apiEndpoint)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data); // See what we got
-        setData(data);
-      })
-      .catch((error) => console.error("Error:", error));
-  }, [apiEndpoint]);
-
-  return data;
-}
+import RecipeList from "./RecipeList";
 
 function App() {
-  let recipes_table = "http://localhost:5000/api/recipes";
-  let recipes = useGetData(recipes_table);
-
   return (
-    <div className="App">
-      <button>Add Recipe</button>
-      <h1>My Recipes</h1>
-      <ul>
-        {recipes.map((recipe) => (
-          <li key={recipe.recipe_id}>
-            <RecipeCard recipe={recipe} />
-          </li>
-        ))}
-      </ul>
-      <div>
-        <RecipeForm />
+    <BrowserRouter>
+      <div className="App">
+        <h1>My Recipes</h1>
+
+        {/* Navigation*/}
+        <nav>
+          <Link to="/">
+            <button className="button add">All Recipes</button>
+          </Link>
+          <Link to="/create">
+            <button className="button add">Add Recipe</button>
+          </Link>
+        </nav>
+
+        <Routes>
+          <Route path="/" element={<RecipeList />} />
+          <Route path="/create" element={<RecipeForm />} />
+        </Routes>
       </div>
-    </div>
+    </BrowserRouter>
   );
 }
 

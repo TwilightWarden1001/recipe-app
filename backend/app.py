@@ -8,6 +8,25 @@ app = Flask(__name__)
 CORS(app)  # Allows React to talk to Flask
 
 
+def print_recipe(recipe_name, prep_time, prep_time_unit, cook_time, cook_time_unit, servings):
+    # Helper function to debug recipe insertion
+    print(recipe_name)
+    print(prep_time)
+    print(prep_time_unit)
+    print(cook_time)
+    print(cook_time_unit)
+    print(servings)
+
+
+def print_ingredients(ingredients):
+    # Helper function to debug ingredient insertion
+    print("="*50)
+    print("INGREDIENTS RECEIVED:")
+    for ingredient in ingredients:
+        print(ingredient)
+    print("="*50)
+
+
 def get_db_connection():
     connection = sqlite3.connect(DATABASE_LOCATION)
     connection.row_factory = sqlite3.Row  # Returns rows as sqlite3.Row objects
@@ -17,18 +36,17 @@ def get_db_connection():
 def create_recipe(connection):
     # All recipe parts
     recipe_name = request.json['recipeName']
-    print(recipe_name)
     prep_time = request.json['prep_time']
-    print(prep_time)
     prep_time_unit = request.json['prep_time_unit']
-    print(prep_time_unit)
     cook_time = request.json['cook_time']
-    print(cook_time)
     cook_time_unit = request.json['cook_time_unit']
-    print(cook_time_unit)
     servings = request.json['servings']
-    print(servings)
     created_at = datetime.now(timezone.utc)
+    print_recipe(recipe_name, prep_time, prep_time_unit,
+                 cook_time, cook_time_unit, servings)
+
+    ingredients = request.json['ingredients']
+    print_ingredients(ingredients)
 
     connection.execute(CREATE_RECIPE, (recipe_name, prep_time,
                        prep_time_unit, cook_time, cook_time_unit, servings, created_at))

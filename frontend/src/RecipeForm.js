@@ -1,98 +1,5 @@
 import { useState } from "react";
-
-function Ingredient() {
-  const [ingredients, setIngredients] = useState([
-    { name: "", amount: "", unit: "" },
-  ]);
-
-  function handleChange(i, e) {
-    const values = [...ingredients];
-    values[i][e.target.name] = e.target.value;
-    setIngredients(values);
-  }
-
-  let addIngredients = () => {
-    setIngredients([...ingredients, { name: "", amount: "", unit: "" }]);
-  };
-
-  let removeIngredients = (index) => {
-    let newIngredients = [...ingredients];
-    newIngredients.splice(index, 1);
-    setIngredients(newIngredients);
-  };
-
-  let handleSubmit = () => {
-    alert(JSON.stringify(ingredients));
-  };
-
-  return (
-    <div onSubmit={handleSubmit}>
-      {ingredients.map((element, index) => (
-        <div key={index}>
-          <label htmlFor="ingredientName">Ingredient Name</label>
-          <input
-            type="text"
-            name="name"
-            id="name"
-            value={element.name}
-            onChange={(e) => handleChange(index, e)}
-          />
-
-          <label htmlFor="ingredientQuantity">Ingredient Quantity</label>
-          <input
-            type="number"
-            name="quantity"
-            id="quantity"
-            value={element.quantity}
-            onChange={(e) => handleChange(index, e)}
-          />
-
-          <label htmlFor="ingredientUnit">Ingredient Unit</label>
-          <select
-            name="unit"
-            id="unit"
-            value={element.unit}
-            onChange={(e) => handleChange(index, e)}
-          >
-            <option value="cups">Cups</option>
-            <option value="tablespoons">Tablespoons</option>
-            <option value="teaspoons">Teaspoons</option>
-            <option value="grams">Grams</option>
-            <option value="kilograms">Kilograms</option>
-            <option value="ounces">Ounces</option>
-            <option value="pounds">Pounds</option>
-            <option value="pieces">Pieces</option>
-            <option value="whole">Whole</option>
-            <option value="half">Half</option>
-            <option value="quarter">Quarter</option>
-            <option value="eighth">Eighth</option>
-          </select>
-          {index ? (
-            <button
-              type="button"
-              className="button remove"
-              onClick={() => removeIngredients(index)}
-            >
-              Remove
-            </button>
-          ) : null}
-        </div>
-      ))}
-      <div className="button-section">
-        <button
-          className="button add"
-          type="button"
-          onClick={() => addIngredients()}
-        >
-          Add
-        </button>
-        <button className="button submit" type="submit">
-          Submit
-        </button>
-      </div>
-    </div>
-  );
-}
+import Ingredient from "./Ingredient";
 
 function RecipeForm() {
   const [recipeName, setRecipeName] = useState("");
@@ -101,20 +8,13 @@ function RecipeForm() {
   const [cook_time, setCook_time] = useState("");
   const [cook_time_unit, setCook_time_unit] = useState("minutes");
   const [servings, setServings] = useState("");
+  const [ingredients, setIngredients] = useState([
+    { name: "", amount: "", unit: "" },
+  ]);
 
   function handleSubmit(e) {
     // Handle the submit myself
     e.preventDefault();
-
-    // Log the output for validation checks
-    console.log(
-      recipeName,
-      prep_time,
-      prep_time_unit,
-      cook_time,
-      cook_time_unit,
-      servings
-    );
 
     // We build a custom JSON object to send to the backend
     const data = {
@@ -124,6 +24,7 @@ function RecipeForm() {
       cook_time: cook_time,
       cook_time_unit: cook_time_unit,
       servings: servings,
+      ingredients: ingredients,
     };
 
     // Make a request to the custom API
@@ -224,9 +125,12 @@ function RecipeForm() {
             required
           />
 
-          <Ingredient />
+          <Ingredient
+            ingredients={ingredients}
+            setIngredients={setIngredients}
+          />
 
-          <button type="submit" value="Submit">
+          <button className="button submit" type="submit" value="Submit">
             Submit
           </button>
           <button type="reset" value="Reset" onClick={(e) => handleReset(e)}>
