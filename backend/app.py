@@ -2,7 +2,7 @@ import sqlite3
 from datetime import datetime, timezone
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from queries import DATABASE_LOCATION, SELECT_ALL_RECIPES, CREATE_RECIPE, DELETE_RECIPE, UPDATE_RECIPE
+from queries import DATABASE_LOCATION, SELECT_ALL_RECIPES, SELECT_RECIPE, CREATE_RECIPE, DELETE_RECIPE, UPDATE_RECIPE, GET_RECIPE_INGREDIENTS, GET_RECIPE_INSTRUCTIONS
 
 app = Flask(__name__)
 CORS(app)  # Allows React to talk to Flask
@@ -59,10 +59,14 @@ def create_recipe(connection):
 def read_all_recipes(connection):
     rows = connection.execute(SELECT_ALL_RECIPES)
     data = []
-
     for row in rows:
         data.append(dict(row))
+    return jsonify(data)
 
+
+def read_single_recipe(connection, recipe_id):
+    row = connection.execute(SELECT_RECIPE, (recipe_id,)).fetchone()
+    data = dict(row)
     return jsonify(data)
 
 
@@ -88,6 +92,22 @@ def delete_recipe(connection, recipe_id):
     return jsonify({'message': 'Recipe Deleted Successfully'})
 
 
+def read_recipe_ingredients(connection, recipe_id):
+    rows = connection.execute(GET_RECIPE_INGREDIENTS, (recipe_id,))
+    data = []
+    for row in rows:
+        data.append(dict(row))
+    return jsonify(data)
+
+
+def read_recipe_instructions(connection, recipe_id):
+    rows = connection.execute(GET_RECIPE_INSTRUCTIONS, (recipe_id,))
+    data = []
+    for row in rows:
+        data.append(dict(row))
+    return jsonify(data)
+
+
 @app.route('/api/recipes', methods=['GET', 'POST'])
 # Handles selecting and adding recipes
 def add_and_get_recipes():
@@ -102,10 +122,15 @@ def add_and_get_recipes():
     print("Invalid request method")
 
 
-@app.route('/api/recipes/<int:recipe_id>', methods=['PUT', 'DELETE'])
+@app.route('/api/recipes/<int:recipe_id>', methods=['GET', 'PUT', 'DELETE'])
 # Handles updating and deleting recipes
 def update_and_delete_recipes(recipe_id):
     connection = get_db_connection()
+
+    # Read in CRUD
+    if request.method == 'GET':
+        return read_single_recipe(connection, recipe_id)
+
     # Update in CRUD
     if request.method == 'PUT':
         return update_recipe(connection, recipe_id)
@@ -113,6 +138,24 @@ def update_and_delete_recipes(recipe_id):
     # Delete in CRUD
     if request.method == 'DELETE':
         return delete_recipe(connection, recipe_id)
+    print("Invalid request method")
+
+
+@app.route('/api/recipe_ingredients_view/<int:recipe_id>', methods=['GET'])
+# Handles getting recipe ingredients
+def get_recipe_ingredients(recipe_id):
+    connection = get_db_connection()
+    if request.method == 'GET':
+        return read_recipe_ingredients(connection, recipe_id)
+    print("Invalid request method")
+
+
+@app.route('/api/recipe_instructions_view/<int:recipe_id>', methods=['GET'])
+# Handles getting recipe instructions
+def get_recipe_instructions(recipe_id):
+    connection = get_db_connection()
+    if request.method == 'GET':
+        return read_recipe_instructions(connection, recipe_id)
     print("Invalid request method")
 
 

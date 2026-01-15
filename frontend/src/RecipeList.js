@@ -1,25 +1,13 @@
 import { useState, useEffect } from "react";
+import { readAllRecipes } from "./api";
 import RecipeCard from "./RecipeCard";
 
-function useGetData(apiEndpoint) {
-  const [data, setData] = useState([]);
+function RecipeList() {
+  const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
-    fetch(apiEndpoint)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data); // See what we got
-        setData(data);
-      })
-      .catch((error) => console.error("Error:", error));
-  }, [apiEndpoint]);
-
-  return data;
-}
-
-function RecipeList() {
-  let recipes_table = "http://localhost:5000/api/recipes";
-  let recipes = useGetData(recipes_table);
+    readAllRecipes().then((data) => setRecipes(data));
+  }, []);
 
   return (
     <div>

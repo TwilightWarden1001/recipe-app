@@ -16,3 +16,9 @@ DELETE_RECIPE = 'DELETE FROM recipes WHERE recipe_id = ?'
 
 # Update a recipe
 UPDATE_RECIPE = 'UPDATE recipes SET recipe_name = ?, prep_time = ?, prep_time_unit = ?, cook_time = ?, cook_time_unit = ?, servings = ? WHERE recipe_id = ?'
+
+# Get RecipeIngredinets
+GET_RECIPE_INGREDIENTS = 'SELECT * FROM recipe_ingredients_view WHERE recipe_id = ?'
+
+# Get RecipeInstructions
+GET_RECIPE_INSTRUCTIONS = 'SELECT * FROM recipe_instructions_view WHERE recipe_id = ?'

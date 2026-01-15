@@ -1,21 +1,13 @@
-function DeleteRecipe(recipe) {
-  // Show confirmation popup
-  const confirmed = window.confirm(
-    `Are you sure you want to delete "${recipe.recipe_name}"?`
-  );
-
-  // Only delete if they clicked OK
-  if (confirmed) {
-    let recipeId = recipe.recipe_id;
-    fetch(`http://localhost:5000/api/recipes/${recipeId}`, {
-      method: "DELETE",
-    });
-  }
-}
+import { useNavigate } from "react-router-dom";
 
 function RecipeCard({ recipe }) {
+  const navigate = useNavigate();
+
   return (
-    <div className="recipe-card">
+    <div
+      className="recipe-card"
+      onClick={() => navigate(`/recipe/${recipe.recipe_id}`)}
+    >
       <h2>{recipe.recipe_name}</h2>
       <div className="recipe-info">
         Servings: {recipe.servings} | Cook time: {recipe.cook_time}{" "}
@@ -27,10 +19,6 @@ function RecipeCard({ recipe }) {
           day: "numeric",
         })}
         <br />
-        <button className="button delete" onClick={() => DeleteRecipe(recipe)}>
-          Delete Recipe
-        </button>
-        <button className="button edit">Edit Recipe</button>
       </div>
     </div>
   );
