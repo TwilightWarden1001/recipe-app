@@ -29,7 +29,7 @@ function RecipeDetail() {
     getInstructions(id).then((data) => setInstructions(data));
   }, [id]);
 
-  // Calculate the totalt ime
+  // Calculate the total time
   const total_time = recipe.cook_time + recipe.prep_time;
   const total_time_unit = recipe.cook_time_unit;
 
