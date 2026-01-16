@@ -12,6 +12,9 @@ function RecipeList() {
   return (
     <div>
       <h1>Recipe List</h1>
+      <label htmlFor="site-search">Search For A Recipe: </label>
+      <input type="text" id="site-search" />
+      <br />
       <ul>
         {recipes.map((recipe) => (
           <li key={recipe.recipe_id}>

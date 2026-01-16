@@ -57,6 +57,7 @@ function Ingredient({ ingredients, setIngredients }) {
             <option value="quarter">Quarter</option>
             <option value="eighth">Eighth</option>
           </select>
+
           {index ? (
             <button
               type="button"
@@ -68,6 +69,7 @@ function Ingredient({ ingredients, setIngredients }) {
           ) : null}
         </div>
       ))}
+      <br />
       <div className="button-section">
         <button
           className="button add"

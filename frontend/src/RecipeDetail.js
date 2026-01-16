@@ -22,12 +22,12 @@ function RecipeDetail() {
   // Get all ingredients linked to the ID
   useEffect(() => {
     getIngredients(id).then((data) => setIngredients(data));
-  }, [id, recipe]);
+  }, [id]);
 
   // Get all the instructions linked to the ID
   useEffect(() => {
     getInstructions(id).then((data) => setInstructions(data));
-  }, [id, recipe]);
+  }, [id]);
 
   // Calculate the totalt ime
   const total_time = recipe.cook_time + recipe.prep_time;
@@ -50,6 +50,8 @@ function RecipeDetail() {
       <p>
         Total time: {total_time} {total_time_unit}
       </p>
+      <p>Recipe Type: {recipe.recipe_type}</p>
+      <p>Added: {new Date(recipe.created_at).toLocaleDateString()}</p>
       <div>
         <h2>Ingredients</h2>
         <ul>
@@ -64,7 +66,7 @@ function RecipeDetail() {
         <ol>
           {instructions.map((instruction) => (
             <li key={instruction.instruction_id}>
-              {instruction.instruction_step} {instruction.instruction_text}
+              {instruction.instruction_text}
             </li>
           ))}
         </ol>

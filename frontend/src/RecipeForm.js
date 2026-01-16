@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Ingredient from "./Ingredient";
+import Instructions from "./Instructions";
 
 function RecipeForm() {
   const [recipeName, setRecipeName] = useState("");
@@ -8,9 +9,11 @@ function RecipeForm() {
   const [cook_time, setCook_time] = useState("");
   const [cook_time_unit, setCook_time_unit] = useState("minutes");
   const [servings, setServings] = useState("");
+  const [recipeType, setRecipeType] = useState("");
   const [ingredients, setIngredients] = useState([
-    { name: "", amount: "", unit: "" },
+    { name: "", quantity: "", unit: "cups" },
   ]);
+  const [instructions, setInstructions] = useState([{ step: "", text: "" }]);
 
   function handleSubmit(e) {
     // Handle the submit myself
@@ -24,7 +27,9 @@ function RecipeForm() {
       cook_time: cook_time,
       cook_time_unit: cook_time_unit,
       servings: servings,
+      recipeType: recipeType,
       ingredients: ingredients,
+      instructions: instructions,
     };
 
     // Make a request to the custom API
@@ -48,6 +53,8 @@ function RecipeForm() {
     setCook_time("");
     setCook_time_unit("");
     setServings("");
+    setIngredients([{ name: "", unit: "cups", quantity: "" }]);
+    setInstructions([{ step: "", text: "" }]);
   }
 
   return (
@@ -55,6 +62,7 @@ function RecipeForm() {
       <h1>Recipe Form</h1>
       <fieldset>
         <form onSubmit={(e) => handleSubmit(e)}>
+          {/* Recipe Name */}
           <label htmlFor="recipeName">Recipe Name*</label>
           <input
             type="text"
@@ -66,6 +74,7 @@ function RecipeForm() {
             required
           />
 
+          {/* Prep Time */}
           <label htmlFor="prep_time">Prep Time*</label>
           <input
             type="number"
@@ -77,8 +86,8 @@ function RecipeForm() {
             required
           />
 
+          {/* Prep Time Unit */}
           <label htmlFor="prep_time_unit">Prep Time Unit*</label>
-
           <select
             name="prep_time_unit"
             id="prep_time_unit"
@@ -91,6 +100,7 @@ function RecipeForm() {
             <option value="days">Days</option>
           </select>
 
+          {/* Cook Time */}
           <label htmlFor="cook_time">Cook Time*</label>
           <input
             type="number"
@@ -102,6 +112,7 @@ function RecipeForm() {
             required
           />
 
+          {/* Cook Time Unit */}
           <label htmlFor="cook_time_unit">Cook Time Unit*</label>
           <select
             name="cook_time_unit"
@@ -115,6 +126,7 @@ function RecipeForm() {
             <option value="days">Days</option>
           </select>
 
+          {/* Servings */}
           <label htmlFor="servings">Servings*</label>
           <input
             type="number"
@@ -125,15 +137,54 @@ function RecipeForm() {
             required
           />
 
-          <Ingredient
-            ingredients={ingredients}
-            setIngredients={setIngredients}
-          />
+          {/* Recipe Types*/}
+          <label htmlFor="recipeType">Recipe Type*</label>
+          <select
+            name="recipeType"
+            id="recipeType"
+            value={recipeType}
+            onChange={(e) => setRecipeType(e.target.value)}
+            required
+          >
+            <option value="Breakfast & Brunch">Breakfast & Brunch</option>
+            <option value="Lunch">Lunch</option>
+            <option value="Dinner">Dinner</option>
+            <option value="Healthy">Healthy</option>
+            <option value="Appetizers">Appetizers</option>
+            <option value="Snacks">Snacks</option>
+            <option value="Desserts">Desserts</option>
+            <option value="Bread">Bread</option>
+            <option value="Soups">Soups</option>
+          </select>
+          <br />
+
+          {/* Ingredients */}
+          <ol>
+            <Ingredient
+              ingredients={ingredients}
+              setIngredients={setIngredients}
+            />
+          </ol>
+          <br />
+
+          {/* Instructions */}
+          <ol>
+            <Instructions
+              instructions={instructions}
+              setInstructions={setInstructions}
+            />
+          </ol>
+          <br />
 
           <button className="button submit" type="submit" value="Submit">
             Submit
           </button>
-          <button type="reset" value="Reset" onClick={(e) => handleReset(e)}>
+          <button
+            className="button reset"
+            ype="reset"
+            value="Reset"
+            onClick={(e) => handleReset(e)}
+          >
             Reset
           </button>
         </form>
