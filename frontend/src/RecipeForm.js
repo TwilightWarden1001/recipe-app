@@ -1,7 +1,7 @@
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import Ingredient from "./Ingredient";
 import Instructions from "./Instructions";
-import { useParams } from "react-router-dom";
 
 function RecipeForm({ initialRecipe = null, isEditing = false }) {
   // Get the ID from the URL. (It will just return {} or null if it's not there)
@@ -16,7 +16,9 @@ function RecipeForm({ initialRecipe = null, isEditing = false }) {
   const [ingredients, set_ingredients] = useState([
     { ingredient_name: "", ingredient_quantity: "", ingredient_unit: "cups" },
   ]);
-  const [instructions, set_instructions] = useState([{ instruction_text: "" }]);
+  const [instructions, set_instructions] = useState([
+    { instruction_text: "", step_number: "" },
+  ]);
 
   useEffect(() => {
     if (initialRecipe) {
@@ -208,6 +210,7 @@ function RecipeForm({ initialRecipe = null, isEditing = false }) {
           <button
             className="button reset"
             ype="reset"
+            type="reset"
             value="Reset"
             onClick={(e) => handleReset(e)}
           >

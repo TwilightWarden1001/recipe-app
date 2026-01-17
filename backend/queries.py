@@ -21,19 +21,19 @@ UPDATE_RECIPE = 'UPDATE recipes SET recipe_name = ?, prep_time = ?, prep_time_un
 GET_RECIPE_INGREDIENTS = 'SELECT ingredient_name, ingredient_quantity, ingredient_unit FROM recipe_ingredients_view WHERE recipe_id = ?'
 
 # Get RecipeInstructions
-GET_RECIPE_INSTRUCTIONS = 'SELECT step_number, instruction_text FROM recipe_instructions_view WHERE recipe_id = ?'
+GET_RECIPE_INSTRUCTIONS = 'SELECT instruction_text, step_number FROM recipe_instructions_view WHERE recipe_id = ?'
 
-# Insert an ingredeint
+# Insert an ingredient
 INSERT_INGREDIENT = 'INSERT INTO ingredients (ingredient_name) VALUES (?)'
 
-# Insert a recipe_ingredient
+# Insert a recipe ingredient
 INSERT_RECIPE_INGREDIENT = 'INSERT INTO recipe_ingredients (recipe_id, ingredient_id, ingredient_quantity, ingredient_unit) VALUES (?, ?, ?, ?)'
 
 # Insert an instruction
-INSERT_INSTRUCTION = 'INSERT INTO instructions (step_number, instruction_text) VALUES (?, ?)'
+INSERT_INSTRUCTION = 'INSERT INTO instructions (instruction_text) VALUES (?)'
 
 # Insert a recipe instruction
-INSERT_RECIPE_INSTRUCTION = 'INSERT INTO recipe_instructions (recipe_id, instruction_id) VALUES (?, ?)'
+INSERT_RECIPE_INSTRUCTION = 'INSERT INTO recipe_instructions (recipe_id, instruction_id, step_number) VALUES (?, ?, ?)'
 
 DELETE_ALL_RECIPE_INGREDIENTS = 'DELETE FROM recipe_ingredients WHERE recipe_id = ?'
 

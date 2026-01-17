@@ -8,7 +8,7 @@ function Instructions({ instructions, setInstructions }) {
   function addInstructions() {
     setInstructions([
       ...instructions,
-      { instruction_step: "", instruction_text: "" },
+      { instruction_text: "", step_number: "" },
     ]);
   }
 
@@ -21,11 +21,9 @@ function Instructions({ instructions, setInstructions }) {
   return (
     <div>
       {instructions.map((element, index) => (
-        <div key={index}>
+        <div key={instructions.step_number}>
           <div className="instruction-wrapper">
-            <label htmlFor="instruction_text">
-              Step {instructions.instruction_step}
-            </label>
+            <label htmlFor="instruction_text">Step {index + 1}</label>
             <input
               type="text"
               name="instruction_text"

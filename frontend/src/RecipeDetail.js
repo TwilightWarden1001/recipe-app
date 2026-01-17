@@ -61,20 +61,20 @@ function RecipeDetail() {
         <h2>Ingredients</h2>
         <ul>
           {ingredients.map((ingredient) => (
-            <li key={ingredient.ingredient_id}>
+            <li key={ingredient.index}>
               {ingredient.ingredient_quantity}
               {ingredient.ingredient_unit} {ingredient.ingredient_name}
             </li>
           ))}
         </ul>
         <h2>Instructions</h2>
-        <ol>
+        <ul>
           {instructions.map((instruction) => (
-            <li key={instruction.instruction_step}>
-              {instruction.instruction_text}
+            <li key={instruction.index}>
+              Step {instruction.step_number}: {instruction.instruction_text}
             </li>
           ))}
-        </ol>
+        </ul>
       </div>
     </div>
   );

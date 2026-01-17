@@ -73,6 +73,7 @@ function Ingredient({ ingredients, setIngredients }) {
         </div>
       ))}
       <br />
+
       <div className="button-section">
         <button
           className="button add"

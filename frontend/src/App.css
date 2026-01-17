@@ -10,13 +10,8 @@ h1 {
   margin-bottom: 20px;
 }
 
-ul {
-  list-style: none;
-  padding: 0;
-}
-
 ol {
-  list-style: dot;
+  list-style: none;
   padding: 0;
 }
 
@@ -29,7 +24,7 @@ nav {
 }
 
 /* Style each recipe as a card */
-.recipe-card {
+.recipe-card { 
   background: white;
   border: 1px solid #e0e0e0;
   border-radius: 8px;

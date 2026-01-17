@@ -19,6 +19,7 @@ from queries import (
     DELETE_ALL_RECIPE_INSTRUCTIONS,
     CHECK_INGREDIENT
 )
+
 from helper import print_recipe, print_ingredients, print_instructions
 app = Flask(__name__)
 CORS(app)  # Allows React to talk to Flask
@@ -32,7 +33,7 @@ def connect_to_db():
 
 
 def create_recipe(connection, cursor):
-    recipe_name = request.json['recipeName']
+    recipe_name = request.json['recipe_name']
     prep_time = request.json['prep_time']
     prep_time_unit = request.json['prep_time_unit']
     cook_time = request.json['cook_time']
@@ -57,9 +58,9 @@ def create_recipe(connection, cursor):
     # Handle Ingredients
     for ingredient in ingredients:
         # Get each part of the ingredient
-        ingredient_name = ingredient['name']
-        ingredient_quantity = ingredient['quantity']
-        ingredient_unit = ingredient['unit']
+        ingredient_name = ingredient['ingredient_name']
+        ingredient_quantity = ingredient['ingredient_quantity']
+        ingredient_unit = ingredient['ingredient_unit']
 
         # Insert the ingredient name and get the key
         cursor.execute(INSERT_INGREDIENT, (ingredient_name,))
@@ -74,16 +75,18 @@ def create_recipe(connection, cursor):
     print_instructions(instructions)
 
     # Handle Instructions
-    for step_number, instruction in enumerate(instructions, start=1):
+    for index, instruction in enumerate(instructions):
         # Get each part of the instruction
-        instruction_text = instruction['text']
+        instruction_text = instruction['instruction_text']
+        step_number = index + 1
 
         # Insert the instruction and get the key
-        cursor.execute(INSERT_INSTRUCTION, (step_number, instruction_text))
+        cursor.execute(INSERT_INSTRUCTION, (instruction_text,))
         instruction_id = cursor.lastrowid
 
         # Insert the key into the join table
-        cursor.execute(INSERT_RECIPE_INSTRUCTION, (recipe_id, instruction_id))
+        cursor.execute(INSERT_RECIPE_INSTRUCTION,
+                       (recipe_id, instruction_id, step_number))
 
     connection.commit()
     connection.close()
@@ -168,10 +171,10 @@ def update_recipe(connection, cursor, recipe_id):
     instructions = request.json['instructions']
 
     # Create instructions, link them in recipe_ingredients
-    for i, instruction in enumerate(instructions):
-        step_number = instruction['step_number']
+    for index, instruction in enumerate(instructions):
         instruction_text = instruction['instruction_text']
-        cursor.execute(INSERT_INSTRUCTION, (step_number, instruction_text))
+        step_number = index + 1
+        cursor.execute(INSERT_INSTRUCTION, (instruction_text, step_number))
         instruction_id = cursor.lastrowid
         cursor.execute(INSERT_RECIPE_INSTRUCTION, (recipe_id, instruction_id))
 
