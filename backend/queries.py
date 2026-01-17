@@ -15,13 +15,13 @@ CREATE_RECIPE = 'INSERT INTO recipes (recipe_name, prep_time, prep_time_unit, co
 DELETE_RECIPE = 'DELETE FROM recipes WHERE recipe_id = ?'
 
 # Update a recipe
-UPDATE_RECIPE = 'UPDATE recipes SET recipe_name = ?, prep_time = ?, prep_time_unit = ?, cook_time = ?, cook_time_unit = ?, servings = ? WHERE recipe_id = ?'
+UPDATE_RECIPE = 'UPDATE recipes SET recipe_name = ?, prep_time = ?, prep_time_unit = ?, cook_time = ?, cook_time_unit = ?, servings = ?, recipe_type = ? WHERE recipe_id = ?'
 
 # Get RecipeIngredinets
-GET_RECIPE_INGREDIENTS = 'SELECT * FROM recipe_ingredients_view WHERE recipe_id = ?'
+GET_RECIPE_INGREDIENTS = 'SELECT ingredient_name, ingredient_quantity, ingredient_unit FROM recipe_ingredients_view WHERE recipe_id = ?'
 
 # Get RecipeInstructions
-GET_RECIPE_INSTRUCTIONS = 'SELECT * FROM recipe_instructions_view WHERE recipe_id = ?'
+GET_RECIPE_INSTRUCTIONS = 'SELECT step_number, instruction_text FROM recipe_instructions_view WHERE recipe_id = ?'
 
 # Insert an ingredeint
 INSERT_INGREDIENT = 'INSERT INTO ingredients (ingredient_name) VALUES (?)'
@@ -34,3 +34,9 @@ INSERT_INSTRUCTION = 'INSERT INTO instructions (step_number, instruction_text) V
 
 # Insert a recipe instruction
 INSERT_RECIPE_INSTRUCTION = 'INSERT INTO recipe_instructions (recipe_id, instruction_id) VALUES (?, ?)'
+
+DELETE_ALL_RECIPE_INGREDIENTS = 'DELETE FROM recipe_ingredients WHERE recipe_id = ?'
+
+DELETE_ALL_RECIPE_INSTRUCTIONS = 'DELETE FROM recipe_instructions WHERE recipe_id = ?'
+
+CHECK_INGREDIENT = 'SELECT ingredient_id FROM ingredients WHERE ingredient_name = ?'

@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 import {
   getRecipe,
   getIngredients,
@@ -13,6 +15,7 @@ function RecipeDetail() {
   const [recipe, setRecipe] = useState({});
   const [ingredients, setIngredients] = useState([]);
   const [instructions, setInstructions] = useState([]);
+  const navigate = useNavigate();
 
   // Get the Recipe linked to the ID
   useEffect(() => {
@@ -35,17 +38,19 @@ function RecipeDetail() {
 
   return (
     <div>
-      <button className="button edit">Edit Recipe</button>
+      <button className="button edit" onClick={() => navigate(`/edit/${id}`)}>
+        Edit Recipe
+      </button>
       <button className="button delete" onClick={() => DeleteRecipe(recipe)}>
         Delete Recipe
       </button>
       <h1>{recipe.recipe_name}</h1>
       <p>Servings: {recipe.servings}</p>
       <p>
-        Cook time: {recipe.cook_time} {recipe.cook_time_unit}
+        Prep time: {recipe.prep_time} {recipe.prep_time_unit}
       </p>
       <p>
-        Prep time: {recipe.prep_time} {recipe.prep_time_unit}
+        Cook time: {recipe.cook_time} {recipe.cook_time_unit}
       </p>
       <p>
         Total time: {total_time} {total_time_unit}
@@ -65,7 +70,7 @@ function RecipeDetail() {
         <h2>Instructions</h2>
         <ol>
           {instructions.map((instruction) => (
-            <li key={instruction.instruction_id}>
+            <li key={instruction.instruction_step}>
               {instruction.instruction_text}
             </li>
           ))}

@@ -14,7 +14,10 @@ from queries import (
     INSERT_INGREDIENT,
     INSERT_RECIPE_INGREDIENT,
     INSERT_INSTRUCTION,
-    INSERT_RECIPE_INSTRUCTION
+    INSERT_RECIPE_INSTRUCTION,
+    DELETE_ALL_RECIPE_INGREDIENTS,
+    DELETE_ALL_RECIPE_INSTRUCTIONS,
+    CHECK_INGREDIENT
 )
 from helper import print_recipe, print_ingredients, print_instructions
 app = Flask(__name__)
@@ -101,28 +104,6 @@ def read_single_recipe(cursor, recipe_id):
     return jsonify(data)
 
 
-def update_recipe(connection, cursor, recipe_id):
-    recipe_name = request.json['recipeName']
-    prep_time = request.json['prep_time']
-    prep_time_unit = request.json['prep_time_unit']
-    cook_time = request.json['cook_time']
-    cook_time_unit = request.json['cook_time_unit']
-    servings = request.json['servings']
-
-    cursor.execute(UPDATE_RECIPE, (recipe_name, prep_time,
-                                   prep_time_unit, cook_time, cook_time_unit, servings, recipe_id))
-    connection.commit()
-    connection.close()
-    return jsonify({'message': 'Recipe Updated Successfully'})
-
-
-def delete_recipe(connection, cursor, recipe_id):
-    cursor.execute(DELETE_RECIPE, (recipe_id,))
-    connection.commit()
-    connection.close()
-    return jsonify({'message': 'Recipe Deleted Successfully'})
-
-
 def read_recipe_ingredients(cursor, recipe_id):
     rows = cursor.execute(GET_RECIPE_INGREDIENTS, (recipe_id,))
     data = []
@@ -137,6 +118,73 @@ def read_recipe_instructions(cursor, recipe_id):
     for row in rows:
         data.append(dict(row))
     return jsonify(data)
+
+
+def update_recipe(connection, cursor, recipe_id):
+    # Get all the recipe parts
+    recipe_name = request.json['recipeName']
+    prep_time = request.json['prep_time']
+    prep_time_unit = request.json['prep_time_unit']
+    cook_time = request.json['cook_time']
+    cook_time_unit = request.json['cook_time_unit']
+    servings = request.json['servings']
+    recipe_type = request.json['recipeType']
+
+    # Update the Recipe Parts
+    cursor.execute(UPDATE_RECIPE, (recipe_name, prep_time, prep_time_unit,
+                   cook_time, cook_time_unit, servings, recipe_type, recipe_id))
+
+    # Get all the ingredients
+    ingredients = request.json['ingredients']
+
+    # Delete all the recipe ingredients
+    cursor.execute(DELETE_ALL_RECIPE_INGREDIENTS, (recipe_id,))
+
+    # Get all the ingredient IDs
+    ingredient_ids = []
+    for ingredient in ingredients:
+        ingredient_name = ingredient['ingredient_name']
+        ingredient_id = cursor.execute(
+            CHECK_INGREDIENT, (ingredient_name,)).fetchone()
+        if ingredient_id is None:
+            cursor.execute(INSERT_INGREDIENT, (ingredient_name,))
+            ingredient_id = cursor.lastrowid
+        else:
+            ingredient_id = ingredient_id[0]
+        ingredient_ids.append(ingredient_id)
+
+    # Add the new ingredients
+    for i, ingredient in enumerate(ingredients):
+        ingredient_quantity = ingredient['ingredient_quantity']
+        ingredient_unit = ingredient['ingredient_unit']
+        ingredient_id = ingredient_ids[i]
+        cursor.execute(INSERT_RECIPE_INGREDIENT, (recipe_id,
+                       ingredient_id, ingredient_quantity, ingredient_unit))
+
+    # Delete all the instructions
+    cursor.execute(DELETE_ALL_RECIPE_INSTRUCTIONS, (recipe_id,))
+
+    # Get all the instructions
+    instructions = request.json['instructions']
+
+    # Create instructions, link them in recipe_ingredients
+    for i, instruction in enumerate(instructions):
+        step_number = instruction['step_number']
+        instruction_text = instruction['instruction_text']
+        cursor.execute(INSERT_INSTRUCTION, (step_number, instruction_text))
+        instruction_id = cursor.lastrowid
+        cursor.execute(INSERT_RECIPE_INSTRUCTION, (recipe_id, instruction_id))
+
+    connection.commit()
+    connection.close()
+    return jsonify({'message': 'Recipe Updated Successfully'})
+
+
+def delete_recipe(connection, cursor, recipe_id):
+    cursor.execute(DELETE_RECIPE, (recipe_id,))
+    connection.commit()
+    connection.close()
+    return jsonify({'message': 'Recipe Deleted Successfully'})
 
 
 @app.route('/api/recipes', methods=['GET', 'POST'])

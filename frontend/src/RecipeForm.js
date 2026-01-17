@@ -1,27 +1,45 @@
-import { useState } from "react";
+import { useState, useEffect, use } from "react";
 import Ingredient from "./Ingredient";
 import Instructions from "./Instructions";
+import { useParams } from "react-router-dom";
 
-function RecipeForm() {
-  const [recipeName, setRecipeName] = useState("");
-  const [prep_time, setPrep_time] = useState("");
-  const [prep_time_unit, setPrep_time_unit] = useState("minutes");
-  const [cook_time, setCook_time] = useState("");
-  const [cook_time_unit, setCook_time_unit] = useState("minutes");
-  const [servings, setServings] = useState("");
-  const [recipeType, setRecipeType] = useState("");
-  const [ingredients, setIngredients] = useState([
-    { name: "", quantity: "", unit: "cups" },
+function RecipeForm({ initialRecipe = null, isEditing = false }) {
+  // Get the ID from the URL. (It will just return {} or null if it's not there)
+  const { id } = useParams();
+  const [recipe_name, set_recipe_name] = useState("");
+  const [prep_time, set_prep_time] = useState("");
+  const [prep_time_unit, set_prep_time_unit] = useState("minutes");
+  const [cook_time, set_cook_time] = useState("");
+  const [cook_time_unit, set_cook_time_unit] = useState("minutes");
+  const [servings, set_servings] = useState("");
+  const [recipeType, set_recipe_type] = useState("");
+  const [ingredients, set_ingredients] = useState([
+    { ingredient_name: "", ingredient_quantity: "", ingredient_unit: "cups" },
   ]);
-  const [instructions, setInstructions] = useState([{ step: "", text: "" }]);
+  const [instructions, set_instructions] = useState([{ instruction_text: "" }]);
+
+  useEffect(() => {
+    if (initialRecipe) {
+      set_recipe_name(initialRecipe.recipe_name);
+      set_prep_time(initialRecipe.prep_time);
+      set_prep_time_unit(initialRecipe.prep_time_unit);
+      set_cook_time(initialRecipe.cook_time);
+      set_cook_time_unit(initialRecipe.cook_time_unit);
+      set_servings(initialRecipe.servings);
+      set_recipe_type(initialRecipe.recipe_type);
+      set_ingredients(initialRecipe.ingredients);
+      set_instructions(initialRecipe.instructions);
+    }
+  }, [initialRecipe]);
+
+  console.log(initialRecipe);
 
   function handleSubmit(e) {
-    // Handle the submit myself
     e.preventDefault();
 
     // We build a custom JSON object to send to the backend
     const data = {
-      recipeName: recipeName,
+      recipeName: recipe_name,
       prep_time: prep_time,
       prep_time_unit: prep_time_unit,
       cook_time: cook_time,
@@ -32,9 +50,20 @@ function RecipeForm() {
       instructions: instructions,
     };
 
+    let url = "";
+    let method = "";
+
+    if (isEditing) {
+      url = `http://localhost:5000/api/recipes/${id}`;
+      method = "PUT";
+    } else {
+      url = "http://localhost:5000/api/recipes";
+      method = "POST";
+    }
+
     // Make a request to the custom API
-    fetch("http://localhost:5000/api/recipes", {
-      method: "POST",
+    fetch(url, {
+      method: method,
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     })
@@ -47,14 +76,15 @@ function RecipeForm() {
   // Basic reset function to handle restarting
   function handleReset(e) {
     e.preventDefault();
-    setRecipeName("");
-    setPrep_time("");
-    setPrep_time_unit("");
-    setCook_time("");
-    setCook_time_unit("");
-    setServings("");
-    setIngredients([{ name: "", unit: "cups", quantity: "" }]);
-    setInstructions([{ step: "", text: "" }]);
+    set_recipe_name("");
+    set_prep_time("");
+    set_prep_time_unit("minutes");
+    set_cook_time("");
+    set_cook_time_unit("minutes");
+    set_servings("");
+    set_recipe_type("Breakfast & Brunch");
+    set_ingredients([{ name: "", unit: "cups", quantity: "" }]);
+    set_instructions([{ step: "", text: "" }]);
   }
 
   return (
@@ -63,13 +93,13 @@ function RecipeForm() {
       <fieldset>
         <form onSubmit={(e) => handleSubmit(e)}>
           {/* Recipe Name */}
-          <label htmlFor="recipeName">Recipe Name*</label>
+          <label htmlFor="recipe_name">Recipe Name*</label>
           <input
             type="text"
-            name="recipeName"
-            id="recipeName"
-            value={recipeName}
-            onChange={(e) => setRecipeName(e.target.value)}
+            name="recipe_name"
+            id="recipe_name"
+            value={recipe_name}
+            onChange={(e) => set_recipe_name(e.target.value)}
             placeholder="Enter Recipe Name"
             required
           />
@@ -81,7 +111,7 @@ function RecipeForm() {
             name="prep_time"
             id="prep_time"
             value={prep_time}
-            onChange={(e) => setPrep_time(e.target.value)}
+            onChange={(e) => set_prep_time(e.target.value)}
             placeholder="Enter Prep Time"
             required
           />
@@ -92,7 +122,7 @@ function RecipeForm() {
             name="prep_time_unit"
             id="prep_time_unit"
             value={prep_time_unit || "minutes"}
-            onChange={(e) => setPrep_time_unit(e.target.value)}
+            onChange={(e) => set_prep_time_unit(e.target.value)}
             required
           >
             <option value="minutes">Minutes</option>
@@ -107,7 +137,7 @@ function RecipeForm() {
             name="cook_time"
             id="cook_time"
             value={cook_time}
-            onChange={(e) => setCook_time(e.target.value)}
+            onChange={(e) => set_cook_time(e.target.value)}
             placeholder="Enter Cook Time"
             required
           />
@@ -118,7 +148,7 @@ function RecipeForm() {
             name="cook_time_unit"
             id="cook_time_unit"
             value={cook_time_unit}
-            onChange={(e) => setCook_time_unit(e.target.value)}
+            onChange={(e) => set_cook_time_unit(e.target.value)}
             required
           >
             <option value="minutes">Minutes</option>
@@ -132,18 +162,18 @@ function RecipeForm() {
             type="number"
             id="servings"
             value={servings}
-            onChange={(e) => setServings(e.target.value)}
+            onChange={(e) => set_servings(e.target.value)}
             placeholder="Enter Servings"
             required
           />
 
           {/* Recipe Types*/}
-          <label htmlFor="recipeType">Recipe Type*</label>
+          <label htmlFor="recipe_type">Recipe Type*</label>
           <select
-            name="recipeType"
-            id="recipeType"
+            name="recipe_type"
+            id="recipe_type"
             value={recipeType}
-            onChange={(e) => setRecipeType(e.target.value)}
+            onChange={(e) => set_recipe_type(e.target.value)}
             required
           >
             <option value="Breakfast & Brunch">Breakfast & Brunch</option>
@@ -159,21 +189,17 @@ function RecipeForm() {
           <br />
 
           {/* Ingredients */}
-          <ol>
-            <Ingredient
-              ingredients={ingredients}
-              setIngredients={setIngredients}
-            />
-          </ol>
+          <Ingredient
+            ingredients={ingredients}
+            setIngredients={set_ingredients}
+          />
           <br />
 
           {/* Instructions */}
-          <ol>
-            <Instructions
-              instructions={instructions}
-              setInstructions={setInstructions}
-            />
-          </ol>
+          <Instructions
+            instructions={instructions}
+            setInstructions={set_instructions}
+          />
           <br />
 
           <button className="button submit" type="submit" value="Submit">

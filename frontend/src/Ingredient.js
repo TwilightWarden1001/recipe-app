@@ -6,10 +6,13 @@ function Ingredient({ ingredients, setIngredients }) {
   }
 
   let addIngredients = () => {
-    setIngredients([...ingredients, { name: "", amount: "", unit: "" }]);
+    setIngredients([
+      ...ingredients,
+      { ingredient_name: "", ingredient_quantity: "", ingredient_unit: "" },
+    ]);
   };
 
-  let removeIngredients = (index) => {
+  let removeIngredient = (index) => {
     let newIngredients = [...ingredients];
     newIngredients.splice(index, 1);
     setIngredients(newIngredients);
@@ -19,29 +22,29 @@ function Ingredient({ ingredients, setIngredients }) {
     <div>
       {ingredients.map((element, index) => (
         <div key={index}>
-          <label htmlFor="ingredientName">Ingredient Name</label>
+          <label htmlFor="ingredient_name">Ingredient Name</label>
           <input
             type="text"
-            name="name"
-            id="name"
-            value={element.name}
+            name="ingredient_name"
+            id="ingredient_name"
+            value={element.ingredient_name}
             onChange={(e) => handleChange(index, e)}
           />
 
-          <label htmlFor="ingredientQuantity">Ingredient Quantity</label>
+          <label htmlFor="ingredient_quantity">Ingredient Quantity</label>
           <input
             type="number"
-            name="quantity"
-            id="quantity"
-            value={element.quantity}
+            name="ingredient_quantity"
+            id="ingredient_quantity"
+            value={element.ingredient_quantity}
             onChange={(e) => handleChange(index, e)}
           />
 
-          <label htmlFor="ingredientUnit">Ingredient Unit</label>
+          <label htmlFor="ingredient_unit">Ingredient Unit</label>
           <select
-            name="unit"
-            id="unit"
-            value={element.unit}
+            name="ingredient_unit"
+            id="ingredient_unit"
+            value={element.ingredient_unit}
             onChange={(e) => handleChange(index, e)}
           >
             <option value="cups">Cups</option>
@@ -62,7 +65,7 @@ function Ingredient({ ingredients, setIngredients }) {
             <button
               type="button"
               className="button remove"
-              onClick={() => removeIngredients(index)}
+              onClick={() => removeIngredient(index)}
             >
               Remove
             </button>

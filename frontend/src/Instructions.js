@@ -6,7 +6,10 @@ function Instructions({ instructions, setInstructions }) {
   }
 
   function addInstructions() {
-    setInstructions([...instructions, { step: "", text: "" }]);
+    setInstructions([
+      ...instructions,
+      { instruction_step: "", instruction_text: "" },
+    ]);
   }
 
   function removeInstructions(index) {
@@ -20,12 +23,14 @@ function Instructions({ instructions, setInstructions }) {
       {instructions.map((element, index) => (
         <div key={index}>
           <div className="instruction-wrapper">
-            <label htmlFor="instructionText">Step {index + 1}</label>
+            <label htmlFor="instruction_text">
+              Step {instructions.instruction_step}
+            </label>
             <input
               type="text"
-              name="text"
-              id="text"
-              value={element.text}
+              name="instruction_text"
+              id="instruction_text"
+              value={element.instruction_text}
               onChange={(e) => handleChange(index, e.target)}
             />
 

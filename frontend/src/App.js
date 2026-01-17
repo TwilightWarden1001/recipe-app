@@ -1,8 +1,9 @@
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import "./App.css";
-import RecipeForm from "./RecipeForm";
 import RecipeList from "./RecipeList";
+import RecipeForm from "./RecipeForm";
 import RecipeDetail from "./RecipeDetail";
+import EditRecipeWrapper from "./EditRecipeWrapper";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/" element={<RecipeList />} />
           <Route path="/create" element={<RecipeForm />} />
           <Route path="/recipe/:id" element={<RecipeDetail />} />
+          <Route path="/edit/:id" element={<EditRecipeWrapper />} />
         </Routes>
       </div>
     </BrowserRouter>
