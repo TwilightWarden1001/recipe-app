@@ -2,25 +2,29 @@
 .App {
   max-width: 800px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 10px;
 }
 
-h1 {
+.recipe-list {
+  margin-top: 20px;
+}
+
+.recipe-list h1 {
   text-align: center;
   margin-bottom: 20px;
 }
 
-ol {
+.recipe-list ul {
   list-style: none;
   padding: 0;
 }
 
-
-nav {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  margin: 20px 0;
+.recipe-list button {
+  background-color: #2196F3;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
 }
 
 /* Style each recipe as a card */
@@ -29,10 +33,19 @@ nav {
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   padding: 20px;
+  cursor: pointer;
   margin-bottom: 20px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: box-shadow 0.2s, transform 0.2s;
 }
 
+/* Hover effect */
+.recipe-card:hover {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  transform: translateY(-2px);
+}
+
+/* Header for recipe cards*/
 .recipe-card h2 {
   color: #E67E22;
   margin-top: 0;
@@ -40,7 +53,7 @@ nav {
 
 .recipe-info {
   color: #666;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 label {
@@ -52,23 +65,10 @@ label {
 }
 
 /* Clean input styling */
-input {
+input, select {
     display: block;
     width: 100%;
     padding: 12px;
-    margin-bottom: 15px;
-    box-sizing: border-box;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    font-size: 14px;
-    transition: border-color 0.3s;
-}
-
-select {
-    display: block;
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
     box-sizing: border-box;
     border: 2px solid #ddd;
     border-radius: 8px;
@@ -146,13 +146,53 @@ button[type="submit"]:hover {
 
 }
 
-.instruction-wrapper {
+.ingredient-wrapper {
   display: flex;
   align-items: center;
   gap: 10px;
   margin-bottom: 10px;
 }
 
+.ingredient-unit {
+  max-width: 150px;
+}
+
+.instruction-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .instruction-wrapper label {
-  min-width: 60px; /* Fixed width for labels */
+  min-width: 60px;
+}
+
+.form-field input,
+.form-field select {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.form-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin-bottom: 10px;
+}
+
+.form-field label {
+  margin-bottom: 5px;
+}
+
+.remove-button {
+  font-size: 14px;
+  height: fit-content;  /* Don't stretch to fill */
+  background-color: #f44336;;
 }

@@ -22,59 +22,74 @@ function Ingredient({ ingredients, setIngredients }) {
     <div>
       {ingredients.map((element, index) => (
         <div key={index}>
-          <label htmlFor="ingredient_name">Ingredient Name</label>
-          <input
-            type="text"
-            name="ingredient_name"
-            id="ingredient_name"
-            value={element.ingredient_name}
-            onChange={(e) => handleChange(index, e)}
-          />
+          <div className="form-row">
+            <div className="form-field">
+              <label htmlFor="ingredient_name">Ingredient Name</label>
+              <input
+                type="text"
+                name="ingredient_name"
+                id="ingredient_name"
+                value={element.ingredient_name}
+                onChange={(e) => handleChange(index, e)}
+                placeholder="Enter the name of the ingredient"
+                required
+              />
+            </div>
 
-          <label htmlFor="ingredient_quantity">Ingredient Quantity</label>
-          <input
-            type="number"
-            name="ingredient_quantity"
-            id="ingredient_quantity"
-            value={element.ingredient_quantity}
-            onChange={(e) => handleChange(index, e)}
-          />
+            <div className="form-field">
+              <label htmlFor="ingredient_quantity">Ingredient Quantity</label>
+              <input
+                type="number"
+                name="ingredient_quantity"
+                id="ingredient_quantity"
+                value={element.ingredient_quantity}
+                onChange={(e) => handleChange(index, e)}
+                placeholder="Enter the quantity of the ingredient"
+                required
+              />
+            </div>
 
-          <label htmlFor="ingredient_unit">Ingredient Unit</label>
-          <select
-            name="ingredient_unit"
-            id="ingredient_unit"
-            value={element.ingredient_unit}
-            onChange={(e) => handleChange(index, e)}
-          >
-            <option value="cups">Cups</option>
-            <option value="tablespoons">Tablespoons</option>
-            <option value="teaspoons">Teaspoons</option>
-            <option value="grams">Grams</option>
-            <option value="kilograms">Kilograms</option>
-            <option value="ounces">Ounces</option>
-            <option value="pounds">Pounds</option>
-            <option value="pieces">Pieces</option>
-            <option value="whole">Whole</option>
-            <option value="half">Half</option>
-            <option value="quarter">Quarter</option>
-            <option value="eighth">Eighth</option>
-          </select>
+            <div className="form-field">
+              <label className="button-on-top" htmlFor="ingredient_unit">
+                Ingredient Unit
+              </label>
+              <select
+                name="ingredient_unit"
+                id="ingredient_unit"
+                value={element.ingredient_unit}
+                onChange={(e) => handleChange(index, e)}
+                required
+              >
+                <option value="cups">Cups</option>
+                <option value="tablespoons">Tablespoons</option>
+                <option value="teaspoons">Teaspoons</option>
+                <option value="grams">Grams</option>
+                <option value="kilograms">Kilograms</option>
+                <option value="ounces">Ounces</option>
+                <option value="pounds">Pounds</option>
+                <option value="pieces">Pieces</option>
+                <option value="whole">Whole</option>
+                <option value="half">Half</option>
+                <option value="quarter">Quarter</option>
+                <option value="eighth">Eighth</option>
+              </select>
+            </div>
 
-          {index ? (
-            <button
-              type="button"
-              className="button remove"
-              onClick={() => removeIngredient(index)}
-            >
-              Remove
-            </button>
-          ) : null}
+            {index ? (
+              <button
+                type="button"
+                className="remove-button"
+                onClick={() => removeIngredient(index)}
+              >
+                Remove
+              </button>
+            ) : null}
+          </div>
         </div>
       ))}
-      <br />
 
-      <div className="button-section">
+      <br />
+      <div>
         <button
           className="button add"
           type="button"

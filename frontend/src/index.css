@@ -1,0 +1,14 @@
+a:link, a:visited, a:hover, a:active {
+  text-decoration: none;
+}
+
+h1 {
+    text-align: center;
+}
+
+nav {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 20px 0;
+}

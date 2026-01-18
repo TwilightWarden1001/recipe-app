@@ -10,10 +10,13 @@ function RecipeList() {
   }, []);
 
   return (
-    <div>
+    <div className="recipe-list">
       <h1>Recipe List</h1>
-      <label htmlFor="site-search">Search For A Recipe: </label>
-      <input type="text" id="site-search" />
+      <div className="form-row">
+        <label htmlFor="site-search">Search For A Recipe: </label>
+        <input type="text" id="site-search" />
+        <button className="button search">Search</button>
+      </div>
       <br />
       <ul>
         {recipes.map((recipe) => (

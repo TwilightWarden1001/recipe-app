@@ -90,7 +90,7 @@ function RecipeForm({ initialRecipe = null, isEditing = false }) {
   }
 
   return (
-    <div>
+    <div className="recipe-form">
       <h1>Recipe Form</h1>
       <fieldset>
         <form onSubmit={(e) => handleSubmit(e)}>
@@ -105,58 +105,72 @@ function RecipeForm({ initialRecipe = null, isEditing = false }) {
             placeholder="Enter Recipe Name"
             required
           />
+          <br />
 
-          {/* Prep Time */}
-          <label htmlFor="prep_time">Prep Time*</label>
-          <input
-            type="number"
-            name="prep_time"
-            id="prep_time"
-            value={prep_time}
-            onChange={(e) => set_prep_time(e.target.value)}
-            placeholder="Enter Prep Time"
-            required
-          />
+          <div className="form-row">
+            <div className="form-field">
+              {/* Prep Time */}
+              <label htmlFor="prep_time">Prep Time*</label>
+              <input
+                type="number"
+                name="prep_time"
+                id="prep_time"
+                value={prep_time}
+                onChange={(e) => set_prep_time(e.target.value)}
+                placeholder="Enter Prep Time"
+                required
+              />
+            </div>
 
-          {/* Prep Time Unit */}
-          <label htmlFor="prep_time_unit">Prep Time Unit*</label>
-          <select
-            name="prep_time_unit"
-            id="prep_time_unit"
-            value={prep_time_unit || "minutes"}
-            onChange={(e) => set_prep_time_unit(e.target.value)}
-            required
-          >
-            <option value="minutes">Minutes</option>
-            <option value="hours">Hours</option>
-            <option value="days">Days</option>
-          </select>
+            {/* Prep Time Unit */}
+            <div className="form-field">
+              <label htmlFor="prep_time_unit">Prep Time Unit*</label>
+              <select
+                name="prep_time_unit"
+                id="prep_time_unit"
+                value={prep_time_unit || "minutes"}
+                onChange={(e) => set_prep_time_unit(e.target.value)}
+                required
+              >
+                <option value="minutes">Minutes</option>
+                <option value="hours">Hours</option>
+                <option value="days">Days</option>
+              </select>
+            </div>
+          </div>
 
-          {/* Cook Time */}
-          <label htmlFor="cook_time">Cook Time*</label>
-          <input
-            type="number"
-            name="cook_time"
-            id="cook_time"
-            value={cook_time}
-            onChange={(e) => set_cook_time(e.target.value)}
-            placeholder="Enter Cook Time"
-            required
-          />
+          <div className="form-row">
+            <div className="form-field">
+              {/* Cook Time */}
+              <label htmlFor="cook_time">Cook Time*</label>
+              <input
+                type="number"
+                name="cook_time"
+                id="cook_time"
+                value={cook_time}
+                onChange={(e) => set_cook_time(e.target.value)}
+                placeholder="Enter Cook Time"
+                required
+              />
+            </div>
 
-          {/* Cook Time Unit */}
-          <label htmlFor="cook_time_unit">Cook Time Unit*</label>
-          <select
-            name="cook_time_unit"
-            id="cook_time_unit"
-            value={cook_time_unit}
-            onChange={(e) => set_cook_time_unit(e.target.value)}
-            required
-          >
-            <option value="minutes">Minutes</option>
-            <option value="hours">Hours</option>
-            <option value="days">Days</option>
-          </select>
+            {/* Cook Time Unit */}
+            <div className="form-field">
+              {/* Cook Time Unit */}
+              <label htmlFor="cook_time_unit">Cook Time Unit*</label>
+              <select
+                name="cook_time_unit"
+                id="cook_time_unit"
+                value={cook_time_unit}
+                onChange={(e) => set_cook_time_unit(e.target.value)}
+                required
+              >
+                <option value="minutes">Minutes</option>
+                <option value="hours">Hours</option>
+                <option value="days">Days</option>
+              </select>
+            </div>
+          </div>
 
           {/* Servings */}
           <label htmlFor="servings">Servings*</label>

@@ -38,12 +38,18 @@ function RecipeDetail() {
 
   return (
     <div>
-      <button className="button edit" onClick={() => navigate(`/edit/${id}`)}>
-        Edit Recipe
-      </button>
-      <button className="button delete" onClick={() => DeleteRecipe(recipe)}>
-        Delete Recipe
-      </button>
+      <nav>
+        <button className="button back" onClick={() => navigate("/")}>
+          <a href="/">Back to Recipe List</a>
+        </button>
+        <button className="button edit" onClick={() => navigate(`/edit/${id}`)}>
+          Edit Recipe
+        </button>
+        <button className="button delete" onClick={() => DeleteRecipe(recipe)}>
+          Delete Recipe
+        </button>
+      </nav>
+
       <h1>{recipe.recipe_name}</h1>
       <p>Servings: {recipe.servings}</p>
       <p>

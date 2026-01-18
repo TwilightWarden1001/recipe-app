@@ -35,7 +35,7 @@ function Instructions({ instructions, setInstructions }) {
             {index ? (
               <button
                 type="button"
-                className="button remove"
+                className="remove-button"
                 onClick={() => removeInstructions(index)}
               >
                 Remove
