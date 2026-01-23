@@ -92,146 +92,144 @@ function RecipeForm({ initialRecipe = null, isEditing = false }) {
   return (
     <div className="recipe-form">
       <h1>Recipe Form</h1>
-      <fieldset>
-        <form onSubmit={(e) => handleSubmit(e)}>
-          {/* Recipe Name */}
-          <label htmlFor="recipe_name">Recipe Name*</label>
-          <input
-            type="text"
-            name="recipe_name"
-            id="recipe_name"
-            value={recipe_name}
-            onChange={(e) => set_recipe_name(e.target.value)}
-            placeholder="Enter Recipe Name"
-            required
-          />
-          <br />
+      <form onSubmit={(e) => handleSubmit(e)}>
+        {/* Recipe Name */}
+        <label htmlFor="recipe_name">Recipe Name*</label>
+        <input
+          type="text"
+          name="recipe_name"
+          id="recipe_name"
+          value={recipe_name}
+          onChange={(e) => set_recipe_name(e.target.value)}
+          placeholder="Enter Recipe Name"
+          required
+        />
+        <br />
 
-          <div className="form-row">
-            <div className="form-field">
-              {/* Prep Time */}
-              <label htmlFor="prep_time">Prep Time*</label>
-              <input
-                type="number"
-                name="prep_time"
-                id="prep_time"
-                value={prep_time}
-                onChange={(e) => set_prep_time(e.target.value)}
-                placeholder="Enter Prep Time"
-                required
-              />
-            </div>
-
-            {/* Prep Time Unit */}
-            <div className="form-field">
-              <label htmlFor="prep_time_unit">Prep Time Unit*</label>
-              <select
-                name="prep_time_unit"
-                id="prep_time_unit"
-                value={prep_time_unit || "minutes"}
-                onChange={(e) => set_prep_time_unit(e.target.value)}
-                required
-              >
-                <option value="minutes">Minutes</option>
-                <option value="hours">Hours</option>
-                <option value="days">Days</option>
-              </select>
-            </div>
+        <div className="form-row">
+          <div className="form-field">
+            {/* Prep Time */}
+            <label htmlFor="prep_time">Prep Time*</label>
+            <input
+              type="number"
+              name="prep_time"
+              id="prep_time"
+              value={prep_time}
+              onChange={(e) => set_prep_time(e.target.value)}
+              placeholder="Enter Prep Time"
+              required
+            />
           </div>
 
-          <div className="form-row">
-            <div className="form-field">
-              {/* Cook Time */}
-              <label htmlFor="cook_time">Cook Time*</label>
-              <input
-                type="number"
-                name="cook_time"
-                id="cook_time"
-                value={cook_time}
-                onChange={(e) => set_cook_time(e.target.value)}
-                placeholder="Enter Cook Time"
-                required
-              />
-            </div>
+          {/* Prep Time Unit */}
+          <div className="form-field">
+            <label htmlFor="prep_time_unit">Prep Time Unit*</label>
+            <select
+              name="prep_time_unit"
+              id="prep_time_unit"
+              value={prep_time_unit || "minutes"}
+              onChange={(e) => set_prep_time_unit(e.target.value)}
+              required
+            >
+              <option value="minutes">Minutes</option>
+              <option value="hours">Hours</option>
+              <option value="days">Days</option>
+            </select>
+          </div>
+        </div>
 
+        <div className="form-row">
+          <div className="form-field">
+            {/* Cook Time */}
+            <label htmlFor="cook_time">Cook Time*</label>
+            <input
+              type="number"
+              name="cook_time"
+              id="cook_time"
+              value={cook_time}
+              onChange={(e) => set_cook_time(e.target.value)}
+              placeholder="Enter Cook Time"
+              required
+            />
+          </div>
+
+          {/* Cook Time Unit */}
+          <div className="form-field">
             {/* Cook Time Unit */}
-            <div className="form-field">
-              {/* Cook Time Unit */}
-              <label htmlFor="cook_time_unit">Cook Time Unit*</label>
-              <select
-                name="cook_time_unit"
-                id="cook_time_unit"
-                value={cook_time_unit}
-                onChange={(e) => set_cook_time_unit(e.target.value)}
-                required
-              >
-                <option value="minutes">Minutes</option>
-                <option value="hours">Hours</option>
-                <option value="days">Days</option>
-              </select>
-            </div>
+            <label htmlFor="cook_time_unit">Cook Time Unit*</label>
+            <select
+              name="cook_time_unit"
+              id="cook_time_unit"
+              value={cook_time_unit}
+              onChange={(e) => set_cook_time_unit(e.target.value)}
+              required
+            >
+              <option value="minutes">Minutes</option>
+              <option value="hours">Hours</option>
+              <option value="days">Days</option>
+            </select>
           </div>
+        </div>
 
-          {/* Servings */}
-          <label htmlFor="servings">Servings*</label>
-          <input
-            type="number"
-            id="servings"
-            value={servings}
-            onChange={(e) => set_servings(e.target.value)}
-            placeholder="Enter Servings"
-            required
-          />
+        {/* Servings */}
+        <label htmlFor="servings">Servings*</label>
+        <input
+          type="number"
+          id="servings"
+          value={servings}
+          onChange={(e) => set_servings(e.target.value)}
+          placeholder="Enter Servings"
+          required
+        />
 
-          {/* Recipe Types*/}
-          <label htmlFor="recipe_type">Recipe Type*</label>
-          <select
-            name="recipe_type"
-            id="recipe_type"
-            value={recipeType}
-            onChange={(e) => set_recipe_type(e.target.value)}
-            required
-          >
-            <option value="Breakfast & Brunch">Breakfast & Brunch</option>
-            <option value="Lunch">Lunch</option>
-            <option value="Dinner">Dinner</option>
-            <option value="Healthy">Healthy</option>
-            <option value="Appetizers">Appetizers</option>
-            <option value="Snacks">Snacks</option>
-            <option value="Desserts">Desserts</option>
-            <option value="Bread">Bread</option>
-            <option value="Soups">Soups</option>
-          </select>
-          <br />
+        {/* Recipe Types*/}
+        <label htmlFor="recipe_type">Recipe Type*</label>
+        <select
+          name="recipe_type"
+          id="recipe_type"
+          value={recipeType}
+          onChange={(e) => set_recipe_type(e.target.value)}
+          required
+        >
+          <option value="Breakfast & Brunch">Breakfast & Brunch</option>
+          <option value="Lunch">Lunch</option>
+          <option value="Dinner">Dinner</option>
+          <option value="Healthy">Healthy</option>
+          <option value="Appetizers">Appetizers</option>
+          <option value="Snacks">Snacks</option>
+          <option value="Desserts">Desserts</option>
+          <option value="Bread">Bread</option>
+          <option value="Soups">Soups</option>
+        </select>
+        <br />
 
-          {/* Ingredients */}
-          <Ingredient
-            ingredients={ingredients}
-            setIngredients={set_ingredients}
-          />
-          <br />
+        {/* Ingredients */}
+        <Ingredient
+          ingredients={ingredients}
+          setIngredients={set_ingredients}
+        />
+        <br />
 
-          {/* Instructions */}
-          <Instructions
-            instructions={instructions}
-            setInstructions={set_instructions}
-          />
-          <br />
+        {/* Instructions */}
+        <Instructions
+          instructions={instructions}
+          setInstructions={set_instructions}
+        />
+        <br />
 
-          <button className="button submit" type="submit" value="Submit">
-            Submit
-          </button>
-          <button
-            className="button reset"
-            ype="reset"
-            type="reset"
-            value="Reset"
-            onClick={(e) => handleReset(e)}
-          >
-            Reset
-          </button>
-        </form>
-      </fieldset>
+        <button className="button submit" type="submit" value="Submit">
+          Submit
+        </button>
+        <button
+          className="button reset"
+          ype="reset"
+          type="reset"
+          value="Reset"
+          onClick={(e) => handleReset(e)}
+        >
+          Reset
+        </button>
+      </form>
     </div>
   );
 }

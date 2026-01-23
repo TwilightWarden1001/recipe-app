@@ -1,198 +1,270 @@
-/* Add some breathing room */
+/* APP CONTAINER */
 .App {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 10px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff5e6;
+  padding: 2rem 1rem;
 }
 
+/* RECIPE LIST */
 .recipe-list {
+  width: 100%;
+  max-width: 1200px;
   margin-top: 20px;
 }
 
 .recipe-list h1 {
-  text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
 }
 
 .recipe-list ul {
-  list-style: none;
-  padding: 0;
+  display: grid;
+  /* Auto-fill creates as many columns as fit, each card min 300px */
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
 }
 
-.recipe-list button {
-  background-color: #2196F3;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-}
-
-/* Style each recipe as a card */
+/* RECIPE CARDS */
 .recipe-card { 
   background: white;
   border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 20px;
+  border-radius: 12px;
+  padding: 1.5rem;
   cursor: pointer;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   transition: box-shadow 0.2s, transform 0.2s;
 }
 
-/* Hover effect */
 .recipe-card:hover {
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  transform: translateY(-4px);
 }
 
-/* Header for recipe cards*/
-.recipe-card h2 {
-  color: #E67E22;
-  margin-top: 0;
-}
-
-.recipe-info {
+.recipe-card .recipe-type {
+  font-style: italic;
+  font-size: 0.875rem;
   color: #666;
-  font-size: 16px;
+}
+.recipe-card  .recipe-name {
+  margin-bottom: 0.75rem;
+}
+
+.recipe-card .recipe-info {
+  color: #333;
+}
+
+/* RECIPE DETAIL PAGE */
+.recipe-detail {
+  width: 100%;
+  max-width: 800px;
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.1);
+  margin-top: 2rem;
+}
+
+.recipe-detail nav {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.recipe-detail .recipe-info h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+  line-height: 1.2;
+}
+
+.recipe-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.meta-item {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.meta-item .bold {
+  font-weight: 600;
+  color: #333;
+  margin-right: 0.25rem;
+}
+
+.recipe-detail h2 {
+  font-size: 1.75rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: #E67E22;
+  border-bottom: 2px solid #E67E22;
+  padding-bottom: 0.5rem;
+}
+
+.recipe-detail ul {
+  margin: 0 0 2rem 0;
+}
+
+.recipe-detail ul li {
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  border-left: 4px solid #E67E22;
+  line-height: 1.6;
+}
+
+/* ========================================
+   FORMS
+   ======================================== */
+.recipe-form {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.1);
+
 }
 
 label {
   display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-  font-size: 16px;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
   color: #333;
 }
 
-/* Clean input styling */
-input, select {
-    display: block;
-    width: 100%;
-    padding: 12px;
-    box-sizing: border-box;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    font-size: 14px;
-    transition: border-color 0.3s;
+input, select, textarea {
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
+  box-sizing: border-box;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border-color 0.3s;
 }
 
-input:focus {
-    outline: none;
-    border-color: #4caf50;
-}
-
-select:focus {
-    outline: none;
-    border-color: #4caf50;
-}
-
-/* Base button styling */
-button {
-    padding: 10px 20px;
-    border-radius: 6px;
-    border: none;
-    color: white;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
-    transition: all 0.2s ease;
-    margin-right: 10px;
-}
-
-button:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-}
-
-button:active {
-    transform: translateY(0);
-}
-
-/* Add/Create actions - Blue (positive action) */
-.button.add,
-button[type="submit"] {
-    background-color: #2196F3;
-}
-
-.button.add:hover,
-button[type="submit"]:hover {
-    background-color: #1976D2;
-}
-
-/* Edit actions - Gray (neutral) */
-.button.edit {
-    background-color: #757575;
-}
-
-.button.edit:hover {
-    background-color: #616161;
-}
-
-/* Delete/Remove actions - Red (dangerous action) */
-.button.remove, .button.delete {
-    background-color: #f44336;
-}
-
-.button.remove:hover, .button.delete:hover {
-    background-color: #d32f2f;
-}
-
-.button.reset {
-    background-color: #9c27b0;
-}
-
-.button.reset:hover {
-    background-color: #7b1fa2;
-
-}
-
-.ingredient-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-.ingredient-unit {
-  max-width: 150px;
-}
-
-.instruction-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.instruction-wrapper label {
-  min-width: 60px;
-}
-
-.form-field input,
-.form-field select {
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: #2196F3;
 }
 
 .form-row {
   display: flex;
-  gap: 10px;
-  margin-bottom: 10px;
+  gap: 1rem;
+  margin-bottom: 1rem;
 }
 
 .form-field {
   display: flex;
   flex-direction: column;
   flex: 1;
-  margin-bottom: 10px;
+  margin-bottom: 1rem;
 }
 
-.form-field label {
-  margin-bottom: 5px;
+.ingredient-wrapper, .instruction-wrapper {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.ingredient-unit {
+  max-width: 150px;
+}
+
+.instruction-wrapper label {
+  min-width: 60px;
+}
+
+/* ========================================
+   BUTTONS
+   ======================================== */
+
+button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  margin-right: 0.5rem;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+/* Button variations */
+
+/* Primary actions - use your orange accent */
+.button.add,
+button[type="submit"] {
+  background-color: #E67E22;
+}
+
+.button.add:hover,
+button[type="submit"]:hover {
+  background-color: #D35400;
+}
+
+/* Secondary/neutral actions - keep gray */
+.button.back,
+.button.edit {
+  background-color: #757575;
+}
+
+.button.back:hover,
+.button.edit:hover {
+  background-color: #616161;
+}
+
+.button.back a {
+  color: white;
+  text-decoration: none;
+}
+
+/* Destructive actions - keep red */
+.button.remove, 
+.button.delete,
+.remove-button {
+  background-color: #f44336;
+  margin-top: auto;
+}
+
+.button.remove:hover, 
+.button.delete:hover,
+.remove-button:hover {
+  background-color: #d32f2f;
+}
+
+/* Reset - make it secondary gray instead of purple */
+.button.reset {
+  background-color: #757575;
+}
+
+.button.reset:hover {
+  background-color: #616161;
 }
 
 .remove-button {
-  font-size: 14px;
-  height: fit-content;  /* Don't stretch to fill */
-  background-color: #f44336;;
+  height: fit-content;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
 }

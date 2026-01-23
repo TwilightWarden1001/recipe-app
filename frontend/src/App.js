@@ -9,8 +9,6 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <h1>My Recipes</h1>
-
         {/* Navigation*/}
         <nav>
           <Link to="/">
