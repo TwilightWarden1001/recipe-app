@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict 0aLu1PdMrabLW8TERIgzmCiqyVrdn6h9TAtoPJT5BcfuKGh0nJweXjmBIz7lNb6
+\restrict Er2AEQQGzzDjNiXvFMaR06pc2A41TZYmtAPYYGsB1q4Vv4QJjWYcuHdtXO02XZv
 
 -- Dumped from database version 18.6
 -- Dumped by pg_dump version 18.6
@@ -203,6 +203,14 @@ ALTER TABLE ONLY public.recipe_ingredients
 
 
 --
+-- Name: recipe_ingredients recipe_ingriendts_recipe_id_position_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.recipe_ingredients
+    ADD CONSTRAINT recipe_ingriendts_recipe_id_position_key UNIQUE (recipe_id, "position");
+
+
+--
 -- Name: recipe_instructions recipe_instructions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -254,5 +262,5 @@ ALTER TABLE ONLY public.recipe_instructions
 -- PostgreSQL database dump complete
 --
 
-\unrestrict 0aLu1PdMrabLW8TERIgzmCiqyVrdn6h9TAtoPJT5BcfuKGh0nJweXjmBIz7lNb6
+\unrestrict Er2AEQQGzzDjNiXvFMaR06pc2A41TZYmtAPYYGsB1q4Vv4QJjWYcuHdtXO02XZv
 
