@@ -1,14 +1,14 @@
+import os
 from flask import Flask, jsonify
 import psycopg
 from psycopg.rows import dict_row
 from flask_cors import CORS
-import os
 
 app = Flask(__name__)
 CORS(app)
 
 
-def fetch_recipe():
+def fetch_recipes():
     user_password = os.environ['POSTGRE_PASSWORD']
 
     with psycopg.connect(
@@ -24,7 +24,7 @@ def fetch_recipe():
 
 @app.route('/api/recipes', methods=['GET'])
 def return_recipe():
-    recipe = fetch_recipe()
+    recipe = fetch_recipes()
     return jsonify(recipe)
 
 
